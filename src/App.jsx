@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 
 
 // === BASIC DATA ===
-const resumeUrl = "/Maanya_S_Aithal_Software_Engineer_Resume.pdf";
+const resumeUrl = "/Maanya S Aithal_Resume.pdf";
 const linkedinUrl = "https://www.linkedin.com/in/maanya-s-aithal04/";
 const githubUrl = "https://github.com/Maa8nya";
 const unstopUrl = "https://unstop.com/u/maanyait8831";
@@ -49,7 +49,7 @@ const projects = [
 ];
 
 const hackathons = [
-  { title: "Global Rank 334 – Unstop", org: "Unstop", extra: "Competitive coding & hackathon participant", link: unstopUrl },
+  { title: "Global Rank 281 – Unstop", org: "Unstop", extra: "Competitive coding & hackathon participant", link: unstopUrl },
   { title: "Myntra HackerRamp: WeForShe 2024", org: "Myntra", extra: "Women-focused tech challenge", link: null },
   { title: "Flipkart GRiD 6.0 – Software Development Track", org: "Flipkart", extra: "Product engineering & SD", link: null },
   { title: "PixelFlow 2.0 – IIIT Bangalore", org: "IIIT Bangalore", extra: "Design & dev focused event", link: null },
@@ -73,7 +73,7 @@ const education = [
     title: "B.E. in Computer Science & Design",
     place: "Mysore University School of Engineering, Mysuru",
     years: "2022 – 2026",
-    detail: "Current: 7th Semester | CGPA: 9.864",
+    detail: "Current: 7th Semester | CGPA: 9.5",
   },
   {
     title: "Pre-University – PCMB",
@@ -719,8 +719,8 @@ const Hero = () => {
                   </div>
                   
                   <div className="mb-4">
-                    <div className="text-4xl font-bold text-white">9.864</div>
-                    <div className="text-sm text-slate-200">CGPA</div>
+                    <div className="text-4xl font-bold text-white">9.5</div>
+                    <div className="text-sm text-slate-200">CGPA (till 3rd Semester)</div>
                   </div>
                   <div className="space-y-2 text-sm text-slate-200">
                     <p>7th Semester CSD</p>
