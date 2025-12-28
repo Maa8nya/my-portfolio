@@ -628,7 +628,8 @@ const Hero = () => {
             variants={slideInRight}
             className="relative"
           >
-            <div className="relative mx-auto h-96 w-96">
+            <div className="relative mx-auto h-64 w-64 sm:h-72 sm:w-72 lg:h-96 lg:w-96">
+
               {/* Animated gradient orb */}
               <motion.div
                 className="absolute inset-0 rounded-full"
@@ -685,7 +686,8 @@ const Hero = () => {
               >
                 <div className="text-center">
                   {/* Photo container */}
-                  <div className="relative mx-auto w-36 h-36 mb-4">
+                  <div className="relative mx-auto w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mb-4">
+
                     <motion.div
                       className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 p-1"
                       animate={{
@@ -753,7 +755,7 @@ const Hero = () => {
 
 const SkillsSection = () => (
   <Section id="skills" label="Expertise" title="Technical Skills">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {Object.entries(skills).map(([category, items], index) => (
         <motion.div
           key={category}
@@ -835,7 +837,7 @@ const SkillsSection = () => (
 
 const ProjectsSection = () => (
   <Section id="projects" label="Portfolio" title="Featured Projects">
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {projects.map((project, index) => (
         <motion.article
           key={project.title}
@@ -959,7 +961,7 @@ const HackathonsSection = () => (
 
 const CertificationsSection = () => (
   <Section id="certifications" label="Credentials" title="Certifications">
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {certifications.map((cert, index) => (
         <motion.div
           key={cert}
@@ -993,7 +995,7 @@ const CertificationsSection = () => (
 const EducationSection = () => (
   <Section id="education" label="Journey" title="Education Timeline">
     <div className="relative">
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500" />
+      <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500" />
       <div className="space-y-12">
         {education.map((edu, index) => (
           <motion.div
