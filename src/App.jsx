@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
+
 
 // === BASIC DATA ===
 const resumeUrl = "/Maanya_S_Aithal_Software_Engineer_Resume.pdf";
@@ -1032,6 +1034,29 @@ const EducationSection = () => (
   </Section>
 );
 
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  emailjs
+    .sendForm(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      e.target,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+    .then(
+      () => {
+        alert("Message sent successfully!");
+        e.target.reset();
+      },
+      (error) => {
+        alert("Failed to send message. Try again!");
+        console.error(error);
+      }
+    );
+};
+
+
 const ContactSection = () => (
   <Section id="contact" label="Connect" title="Let's Build Together">
     <div className="grid lg:grid-cols-2 gap-12">
@@ -1121,14 +1146,11 @@ const ContactSection = () => (
         </div>
       </motion.div>
       
-      <motion.form
-        variants={slideInRight}
-        onSubmit={(e) => {
-          e.preventDefault();
-          alert("Message sent successfully!");
-        }}
-        className="relative"
-      >
+        <motion.form
+          variants={slideInRight}
+          onSubmit={handleSubmit}
+          className="relative"
+        >    
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/50 to-slate-100/50 dark:from-slate-900/50 dark:to-slate-800/50 backdrop-blur-sm border border-white/20 dark:border-slate-700/50" />
         <div className="relative p-8">
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
@@ -1142,6 +1164,7 @@ const ContactSection = () => (
               </label>
               <input
                 type="text"
+                name="name"
                 className="w-full rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Your name"
                 required
@@ -1154,6 +1177,7 @@ const ContactSection = () => (
               </label>
               <input
                 type="email"
+                name="email"
                 className="w-full rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="your.email@example.com"
                 required
@@ -1165,6 +1189,7 @@ const ContactSection = () => (
                 Message
               </label>
               <textarea
+                name="message"
                 rows="5"
                 className="w-full rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Hello, I'd like to discuss..."
