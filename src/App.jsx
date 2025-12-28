@@ -1034,30 +1034,60 @@ const EducationSection = () => (
   </Section>
 );
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+const Toast = ({ message, type, onClose }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    exit={{ opacity: 0, y: 30, scale: 0.9 }}
+    transition={{ duration: 0.3 }}
+    className={`fixed bottom-6 right-6 z-50 rounded-xl px-6 py-4 shadow-xl text-white ${
+      type === "success"
+        ? "bg-gradient-to-r from-emerald-500 to-green-600"
+        : "bg-gradient-to-r from-red-500 to-rose-600"
+    }`}
+  >
+    <div className="flex items-center gap-3">
+      <span className="text-xl">{type === "success" ? "✅" : "❌"}</span>
+      <span className="font-semibold">{message}</span>
+      <button onClick={onClose} className="ml-4 text-white/80 hover:text-white">
+        ✕
+      </button>
+    </div>
+  </motion.div>
+);
 
-  emailjs
-    .sendForm(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      e.target,
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    )
-    .then(
-      () => {
-        alert("Message sent successfully!");
-        e.target.reset();
-      },
-      (error) => {
-        alert("Failed to send message. Try again!");
-        console.error(error);
-      }
-    );
-};
 
+const ContactSection = () =>{
+  const [isSending, setIsSending] = useState(false);
+  const [toast, setToast] = useState(null);
 
-const ContactSection = () => (
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSending(true);
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        e.target,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          setToast({ type: "success", message: "Message sent successfully!" });
+          e.target.reset();
+        },
+        () => {
+          setToast({ type: "error", message: "Failed to send message. Try again!" });
+        }
+      )
+      .finally(() => {
+        setIsSending(false);
+        setTimeout(() => setToast(null), 4000);
+      });
+   };
+
+  return (
   <Section id="contact" label="Connect" title="Let's Build Together">
     <div className="grid lg:grid-cols-2 gap-12">
       <motion.div
@@ -1198,19 +1228,48 @@ const ContactSection = () => (
             </div>
             
             <motion.button
-              type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full rounded-xl bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 px-6 py-4 text-lg font-semibold text-white shadow-xl hover:shadow-2xl transition-all"
-            >
-              Send Message
-            </motion.button>
+                type="submit"
+                disabled={isSending}
+                whileHover={!isSending ? { scale: 1.02 } : {}}
+                whileTap={!isSending ? { scale: 0.98 } : {}}
+                className={`w-full rounded-xl px-6 py-4 text-lg font-semibold text-white shadow-xl transition-all
+                  ${
+                    isSending
+                      ? "bg-slate-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 hover:shadow-2xl"
+                  }`}
+              >
+                {isSending ? (
+                  <span className="flex items-center justify-center gap-3">
+                    <motion.span
+                      className="h-5 w-5 rounded-full border-2 border-white border-t-transparent"
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+                    />
+                    Sending...
+                  </span>
+                ) : (
+                  "Send Message"
+                )}
+              </motion.button>
+
+              <AnimatePresence>
+  {toast && (
+    <Toast
+      type={toast.type}
+      message={toast.message}
+      onClose={() => setToast(null)}
+    />
+  )}
+</AnimatePresence>
+
           </div>
         </div>
       </motion.form>
     </div>
   </Section>
 );
+};
 
 const Footer = () => (
   <footer className="relative border-t border-slate-200/50 dark:border-slate-800/50 bg-gradient-to-r from-white/50 to-slate-100/50 dark:from-slate-900/50 dark:to-slate-800/50 backdrop-blur-sm">
